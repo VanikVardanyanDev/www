@@ -1,18 +1,27 @@
-import { Box, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@mui/material";
 
 interface INotesItem {
-  text: string;
+  notes: string;
   sign: string;
   tz: string;
+  date: string;
 }
 
-export const NotesItem = ({ text, sign, tz }: INotesItem) => {
+export const NotesItem = ({ notes, sign, date }: INotesItem) => {
   return (
-    <Box sx={{ border: "1px solid black" }}>
-      <Typography>{sign}</Typography>
-      <Typography>Запись N 1</Typography>
-      <Typography>{tz}</Typography>
-      <Typography>{text}</Typography>
-    </Box>
+    // </Box>
+    <Card sx={{ minWidth: 150, borderLeft: "none" }} variant="outlined">
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          {sign}
+        </Typography>
+        <Typography>Запись N 1</Typography>
+        <Typography color="text.secondary" sx={{ mb: 1.5 }}>
+          {date}
+          <br />
+        </Typography>
+        <Typography>{notes}</Typography>
+      </CardContent>
+    </Card>
   );
 };

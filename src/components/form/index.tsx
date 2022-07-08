@@ -13,6 +13,8 @@ import {
 } from "@material-ui/core";
 import "@fontsource/roboto";
 import { request } from "../../api";
+import { useDispatch } from "react-redux";
+import { addNotes } from "../../store/action/actoin";
 
 const validationSchema = Yup.object({
   notes: Yup.string().required("обязательное поле"),
@@ -20,6 +22,7 @@ const validationSchema = Yup.object({
   tz: Yup.string().required("обязательное поле"),
 });
 export const CreateForm = () => {
+  const dispatch = useDispatch();
   const [zone, setZone] = useState([]);
   const [isZone, setIsZone] = useState(true);
 
@@ -30,8 +33,15 @@ export const CreateForm = () => {
       tz: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      // console.log(values);
+      // dispatch(addNotes(values));
+      try {
+        const response = await request.get(values.tz);
+        dispatch(addNotes({ ...values, date: response.data.datetime }));
+      } catch (e) {
+        console.log(e);
+      }
     },
   });
 
