@@ -1,6 +1,9 @@
 import { Box } from "@material-ui/core";
 import { CreateForm } from "./components/form";
 import { Notes } from "./components/notes";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { NotesTabs } from "./components/Tabs";
+import { NotesDetail } from "./components/notesDetail";
 
 export const App = () => {
   return (
@@ -10,8 +13,16 @@ export const App = () => {
         margin: "auto",
       }}
     >
-      <CreateForm />
-      <Notes />
+      <Router>
+        <div>
+          <NotesTabs />
+          <Routes>
+            <Route path="/" element={<CreateForm />} />
+            <Route path="/notes" element={<Notes />} />
+            <Route path="/detail/:id/:page" element={<NotesDetail />} />
+          </Routes>
+        </div>
+      </Router>
     </Box>
   );
 };

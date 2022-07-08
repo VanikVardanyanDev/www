@@ -8,7 +8,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextareaAutosize,
   TextField,
 } from "@material-ui/core";
 import "@fontsource/roboto";
@@ -25,6 +24,7 @@ export const CreateForm = () => {
   const dispatch = useDispatch();
   const [zone, setZone] = useState([]);
   const [isZone, setIsZone] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -33,14 +33,16 @@ export const CreateForm = () => {
       tz: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      // console.log(values);
-      // dispatch(addNotes(values));
+    onSubmit: async (values, { resetForm }) => {
+      setLoading(true);
       try {
         const response = await request.get(values.tz);
         dispatch(addNotes({ ...values, date: response.data.datetime }));
+        await resetForm({});
+        setLoading(false);
       } catch (e) {
         console.log(e);
+        setLoading(false);
       }
     },
   });
@@ -69,6 +71,7 @@ export const CreateForm = () => {
         fullWidth
         minRows={10}
         name="notes"
+        value={formik.values.notes}
         onChange={formik.handleChange}
         error={formik.touched.notes && Boolean(formik.errors.notes)}
         helperText={formik.touched.notes && formik.errors.notes}
@@ -89,6 +92,7 @@ export const CreateForm = () => {
             marginRight: "15px",
           }}
           name="sign"
+          value={formik.values.sign}
           onChange={formik.handleChange}
           error={formik.touched.sign && Boolean(formik.errors.sign)}
           helperText={formik.touched.sign && formik.errors.sign}
@@ -131,6 +135,7 @@ export const CreateForm = () => {
         style={{
           margin: "15px 0",
         }}
+        disabled={loading}
       >
         Создать
       </Button>

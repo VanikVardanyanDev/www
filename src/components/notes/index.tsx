@@ -2,27 +2,30 @@ import { Box, Grid } from "@material-ui/core";
 import { Pagination } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+
 import { NotesItem } from "../notesItem";
 
 export const Notes = () => {
   const [page, setPage] = useState(1);
   const notes = useSelector((state) => state.notes.notes[page]);
-  const state = useSelector((state) => state.notes);
-  console.log(state);
   const total = Object.keys(useSelector((state) => state.notes.notes)).length;
-  const handleChangePage = (e, page) => {
+  const handleChangePage = (e: any, page: number) => {
     setPage(page);
   };
   return (
-    <Box>
+    <Box
+      sx={{
+        mt: 5,
+      }}
+    >
       <Grid
         container
-        spacing={5}
+        spacing={3}
         rowSpacing={1}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {!notes.length && "пока записей нет"}
-        {notes.map(({ notes, sign, tz, date, id }) => {
+        {notes.map(({ notes, sign, tz, date, id, notesNumber }) => {
           return (
             <Grid item xs={6}>
               <NotesItem
@@ -31,12 +34,17 @@ export const Notes = () => {
                 date={date}
                 tz={tz}
                 key={id}
+                notesNumber={notesNumber}
+                id={id}
+                page={page}
               />
             </Grid>
           );
         })}
       </Grid>
-      <Pagination count={total} onChange={handleChangePage} />
+      {!!notes.length && (
+        <Pagination count={total} onChange={handleChangePage} />
+      )}
     </Box>
   );
 };
