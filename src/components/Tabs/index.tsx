@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Box, Tab, Tabs } from "@mui/material";
 
@@ -10,6 +10,9 @@ export const NotesTabs = () => {
     setValue(newValue);
     navigate(newValue);
   };
+  useEffect(() => {
+    setValue(location.pathname);
+  }, [location]);
   return (
     <Box sx={{ mb: 5 }}>
       <Tabs
