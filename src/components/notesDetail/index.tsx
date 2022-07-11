@@ -4,7 +4,6 @@ import { NotesItem } from "../notesItem";
 
 export const NotesDetail = () => {
   const { page, id } = useParams();
-  console.log(page, id);
   const notes = useSelector((state) => state.notes.notes[page]);
   const note = notes.find((item) => item.id === id);
 

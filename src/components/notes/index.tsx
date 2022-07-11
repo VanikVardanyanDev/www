@@ -1,13 +1,13 @@
-import { Box, Grid } from "@material-ui/core";
-import { Pagination } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { Box, Grid, Pagination } from "@mui/material";
 
 import { NotesItem } from "../notesItem";
 
 export const Notes = () => {
   const [page, setPage] = useState(1);
-  const notes = useSelector((state) => state.notes.notes[page]);
+  const notes = useSelector((state: RootState) => state.notes.notes[page]);
   const total = Object.keys(useSelector((state) => state.notes.notes)).length;
   const handleChangePage = (e: any, page: number) => {
     setPage(page);

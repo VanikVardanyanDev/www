@@ -9,7 +9,7 @@ import {
   MenuItem,
   Select,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 import "@fontsource/roboto";
 import { request } from "../../api";
 import { useDispatch } from "react-redux";
@@ -108,7 +108,6 @@ export const CreateForm = () => {
             disabled={isZone}
             name="tz"
             onChange={(e) => {
-              console.log(e.target.value);
               formik.setFieldValue("tz", e.target.value);
             }}
             style={{
